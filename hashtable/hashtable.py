@@ -23,7 +23,7 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
-        self.capacity = MIN_CAPACITY
+        self.capacity = capacity
         self.storage = [None] * capacity
 
     def get_num_slots(self):
@@ -104,9 +104,10 @@ class HashTable:
         """
         index = self.hash_index(key)
 
-        if not self.storage[index]:
-            self.storage[index] = []
-        self.storage[index].append(HashTableEntry(key, value))
+        # if not self.storage[index]:
+        #     self.storage[index] = []
+        # self.storage[index].append(HashTableEntry(key, value))
+        self.storage[index] = HashTableEntry(key, value)
 
     def delete(self, key):
         """
@@ -116,7 +117,9 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+
+        self.storage[index] = None
 
     def get(self, key):
         """
@@ -128,7 +131,7 @@ class HashTable:
         """
         index = self.hash_index(key)
         if self.storage[index]:
-            return self.storage[index][0].value
+            return self.storage[index].value
         return None
 
     def resize(self, new_capacity):
@@ -143,7 +146,7 @@ class HashTable:
 
 ht = HashTable(8)
 ht.put('hello', 'world')
-print(ht.storage[7][0].key)
+# print(ht.storage[7][0].key)
 
 # if __name__ == "__main__":
 #     ht = HashTable(8)
