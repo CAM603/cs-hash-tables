@@ -23,7 +23,8 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
-        self.capacity = [None] * capacity
+        self.capacity = MIN_CAPACITY
+        self.storage = [None] * capacity
 
     def get_num_slots(self):
         """
@@ -59,9 +60,9 @@ class HashTable:
 
         hash = offset_basis
 
-        for byte in key:
+        for char in key:
             hash += hash * fnv_prime
-            hash += hash ^ ord(byte)
+            hash += hash ^ ord(char)
         return hash
 
     def djb2(self, key):
@@ -70,7 +71,12 @@ class HashTable:
 
         Implement this, and/or FNV-1.
         """
-        # Your code here
+        # Needs to be a high prime number
+        hash = 7883
+
+        for char in key:
+            hash = hash * 33 + ord(char)
+        return hash
 
     # def _hash(self, key):
     #     bytes_rep = key.encode()
@@ -96,7 +102,11 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+
+        if not self.storage[index]:
+            self.storage[index] = []
+        self.storage[index].append(HashTableEntry(key, value))
 
     def delete(self, key):
         """
@@ -116,7 +126,10 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+        if self.storage[index]:
+            return self.storage[index][0].value
+        return None
 
     def resize(self, new_capacity):
         """
@@ -129,11 +142,8 @@ class HashTable:
 
 
 ht = HashTable(8)
-print(ht.fnv1('Hello'))
-# print(ht._hash('Goodbye'))
-# print(ht._hash('hello'))
-# print(ht._hash('poop'))
-# print(ht._hash('Hello'))
+ht.put('hello', 'world')
+print(ht.storage[7][0].key)
 
 # if __name__ == "__main__":
 #     ht = HashTable(8)
