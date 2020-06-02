@@ -26,8 +26,29 @@ class HashTableEntry:
             current = current.next
         return current
 
+    def delete(self, key):
+        current = self
+        print(f'key:{current.key}, value:{current.value}, next: {current.next}')
+        # Deleting head of the list
+        if current.key == key:
+            self.key = None
+            self.value = None
+            self = current.next
 
-# Hash table can't have fewer than this many slots
+        prev = current
+        current = current.next
+
+        while current is not None:
+            if current.key == key:  # delete it
+                prev.next = current.next
+
+            else:
+                prev = prev.next
+                current = current.next
+        return None
+
+
+        # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
 
@@ -43,6 +64,7 @@ class HashTable:
         # Your code here
         self.capacity = capacity
         self.storage = [None] * capacity
+        self.count = 0
 
     def get_num_slots(self):
         """
@@ -64,13 +86,13 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        count = 0
-        for i in range(self.capacity):
-            current = self.storage[i]
-            while current is not None:
-                count += 1
-                current = current.next
-        return count / self.capacity
+        # count = 0
+        # for i in range(self.capacity):
+        #     current = self.storage[i]
+        #     while current is not None:
+        #         count += 1
+        #         current = current.next
+        return self.count / self.capacity
 
     def fnv1(self, key):
         """
@@ -133,6 +155,7 @@ class HashTable:
         # if nothing there create the first HTE
         if not self.storage[index]:
             self.storage[index] = HashTableEntry(key, value)
+            self.count += 1
         # check to see if key/value already exists
         node = self.storage[index].find(key)
         if node:
@@ -140,9 +163,11 @@ class HashTable:
             node.key = key
             node.value = value
         else:
-            # add new HTE to last node
-            last_node = self.storage[index].getLast()
-            last_node.next = HashTableEntry(key, value)
+            # add new HTE to linked list
+            new_node = HashTableEntry(key, value)
+            new_node.next = self.storage[index]
+            self.count += 1
+
 # def put(self, key, value): # For no collision test
 #     index = self.hash_index(key)
 #     self.storage[index] = HashTableEntry(key, value)
@@ -160,9 +185,8 @@ class HashTable:
         index = self.hash_index(key)
         node = self.storage[index].find(key)
         if node:
-            # delete it if yes and reassign pointers
-            node.key = None
-            node.value = None
+            self.storage[index].delete(key)
+            self.count -= 1
         else:
             print("ERROR")
     # def delete(self, key): # for no collision test
@@ -207,17 +231,10 @@ class HashTable:
             while current is not None:
                 new_table.put(current.key, current.value)
                 current = current.next
+                self.count += 1
         self.capacity = new_capacity
         self.storage = new_table.storage
 
-
-# ht = HashTable(8)
-# Test resizing
-# old_capacity = ht.get_num_slots()
-# ht.resize(ht.capacity * 2)
-# new_capacity = ht.get_num_slots()
-
-# print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
 if __name__ == "__main__":
     ht = HashTable(8)
