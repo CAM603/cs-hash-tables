@@ -9,6 +9,7 @@ with open(os.path.join(sys.path[0], "input.txt")) as f:
     words = f.read()
     # Split into list of words
     words = words.split()
+    f.close()
 
 # TODO: analyze which words can follow other words
 # Your code here

@@ -10,7 +10,7 @@ def word_count(s):
     s = s.split()
     # Loop through list
     for word in s:
-        # Remove non alphanumeric characters
+        # Remove ignored characters
         word = "".join(i.lower() for i in word if not i in ignore)
         # check if word contains anything valid
         if not word:
