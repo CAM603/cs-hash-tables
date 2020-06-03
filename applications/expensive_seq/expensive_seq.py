@@ -11,7 +11,7 @@ def expensive_seq(x, y, z):
         result = expensive_seq(x - 1, y + 1, z) + expensive_seq(x - 2,
                                                                 y + 2, z * 2) + expensive_seq(x - 3, y + 3, z * 3)
         cache[(x, y, z)] = result
-        return result
+        return cache[(x, y, z)]
     # If it is, pull value from dictionary
     return cache[(x, y, z)]
 
