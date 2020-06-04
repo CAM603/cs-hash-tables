@@ -44,6 +44,16 @@ f(7) + f(1) = f(12) - f(1)    34 + 10 = 54 - 10
 f(3) + f(3) = f(12) - f(3)    18 + 18 = 54 - 18
 ```
 
+```
+f(1) + f(1) = f(12) - f(7)    20 = 20
+f(1) + f(4) = f(12) - f(4)    32 = 32
+f(4) + f(1) = f(12) - f(4)    32 = 32
+f(1) + f(7) = f(12) - f(1)    44 = 44
+f(4) + f(4) = f(12) - f(1)    44 = 44
+f(7) + f(1) = f(12) - f(1)    44 = 44
+f(3) + f(3) = f(12) - f(3)    36 = 36
+```
+
 The left column shows the `a`-`d` inputs to `f(x)`, and the right column
 shows the result from the what `f(x)` returns for each of those.
 

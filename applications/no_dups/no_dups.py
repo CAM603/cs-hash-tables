@@ -10,6 +10,15 @@ def no_dups(s):
     return s
 
 
+# def no_dups(s):
+#     s = s.split()
+#     my_dict = {}
+#     for word in s:
+#         if not word in my_dict.keys():
+#             my_dict[word] = 1
+#     return " ".join(list(my_dict.keys()))
+
+
 if __name__ == "__main__":
     print(no_dups(""))
     print(no_dups("hello"))
